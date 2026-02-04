@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Défi du Mercredi - Mots Fléchés</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fff9c4 0%, #ffeb3b 100%);
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 450px;
+            width: 85%;
+            position: relative;
+        }
+        .header-icon { font-size: 50px; margin-bottom: 10px; }
+        h1 { color: #fbc02d; font-size: 1.8rem; }
+        
+        .mission-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: left;
+            margin: 20px 0;
+            border-left: 5px solid #fbc02d;
+            font-size: 1.05rem;
+        }
+
+        #val-btn {
+            background-color: #4caf50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .indice-reveal {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-radius: 15px;
+            border: 3px dashed #4caf50;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="header-icon">🧩✍️</div>
+        <h1>Étape 3 : Neurones en action</h1>
+        
+        <p>Aujourd'hui Héloïse, on sort le dictionnaire !</p>
+
+        <div class="mission-box">
+            🎯 <b>Mission :</b> Compléter les <b>Mots Fléchés</b> du jour.<br><br>
+            ⏱️ <b>Contrainte :</b> Moins de 10 minutes !<br><br>
+            📸 <b>Preuve :</b> Envoie la photo de la grille à Philippe.
+        </div>
+
+        <button id="val-btn" onclick="handleButtonClick()">C'est Bonnnnnnn</button>
+
+        <div id="indice-box" class="indice-reveal">
+            💡 <b>INCROYABLE !</b><br>
+            Ton troisième indice clé est :<br>
+            <span style="font-size: 45px; color: #2e7d32;"><strong>S</strong></span>
+        </div>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        const maxPranks = 4;
+        const valBtn = document.getElementById('val-btn');
+        const indiceBox = document.getElementById('indice-box');
+
+        function handleButtonClick() {
+            if (clickCount < maxPranks) {
+                moveButton();
+            } else {
+                showFinalIndice();
+            }
+        }
+
+        function moveButton() {
+            clickCount++;
+            
+            // On change le texte du bouton pour la farce
+            valBtn.innerText = "oups nan tu as mal cliqué je suis là";
+            
+            // On passe en position absolue pour le faire bouger
+            valBtn.style.position = 'fixed';
+            
+            // Calcul de position aléatoire
+            const x = Math.random() * (window.innerWidth - valBtn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - valBtn.offsetHeight - 20);
+            
+            valBtn.style.left = x + 'px';
+            valBtn.style.top = y + 'px';
+        }
+
+        function showFinalIndice() {
+            // Remettre le bouton à sa place normale ou le cacher
+            valBtn.style.display = 'none';
+            // Afficher l'indice
+            indiceBox.style.display = 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // Pour mobile : on déclenche la farce aussi au toucher
+        valBtn.addEventListener('touchstart', function(e) {
+            if (clickCount < maxPranks) {
+                e.preventDefault();
+                handleButtonClick();
+            }
+        });
+    </script>
+</body>
+</html>
